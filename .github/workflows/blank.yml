@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI-CD AWS
+env:
+  EB_Packet_S3_bucket_name: "study-git"
+  EB_Aplication_name      : "testSite"
+  EB_Environment_name     : "Testsite-env"
+  Deploy_package_name     : "Site_app_${{ github.sha }}.zip"
+  AWS_region_name         : "us-east-2"
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: 
+      - master
+      
+
+jobs:
+ my_ci
+ 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repositori
+      - uses: actions/checkout@v1
+
+      - name: Create ZIP deployment
+        run: zip -r {{ env.Deploy_package_name }} ./ -x *.git*
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
